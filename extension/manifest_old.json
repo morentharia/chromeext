@@ -1,0 +1,25 @@
+{
+  "name": "razdva36 helper",
+  "description": "razdva36 helper",
+  "version": "1.0",
+  "permissions": ["storage", "declarativeContent", "activeTab", "tabs"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "page_action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "128x128.png"
+  },
+  "manifest_version": 2
+}
