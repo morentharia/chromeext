@@ -94,14 +94,10 @@ func wsConnHandler(ws *websocket.Conn) {
 					if err != nil {
 						return err
 					}
-					hiCode, err := highlight(string(content), "javascript", "terminal", "dracula")
-					if err != nil {
-						return err
-					}
 					m := map[string]interface{}{
 						"message":          "eval",
 						"code":             string(content),
-						"highlighted_code": hiCode,
+						"highlighted_code": highlight(string(content), "javascript", "terminal", "dracula"),
 					}
 					s, err := colorjson.Marshal(m)
 					if err != nil {
@@ -150,7 +146,7 @@ func wsConnHandler(ws *websocket.Conn) {
 	logrus.Info("close connection")
 }
 
-func highlight(source, lexer, formatter, style string) (string, error) {
+func highlight(source, lexer, formatter, style string) string {
 	// Determine lexer.
 	l := lexers.Get(lexer)
 	if l == nil {
@@ -175,13 +171,15 @@ func highlight(source, lexer, formatter, style string) (string, error) {
 
 	it, err := l.Tokenise(nil, source)
 	if err != nil {
-		return "", err
+		logrus.WithError(err).Error("tokenise")
+		return source
 	}
 
 	w := bytes.NewBufferString("")
 	err = f.Format(w, s, it)
 	if err != nil {
-		return "", err
+		logrus.WithError(err).Error("format")
+		return source
 	}
-	return w.String(), nil
+	return w.String()
 }

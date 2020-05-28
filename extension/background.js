@@ -15,6 +15,20 @@ function connect() {
         return;
       }
       chrome.tabs.sendMessage(activeTab.id, JSON.parse(e.data));
+      //
+      //
+      //
+      // console.log(">>>>>>>>>" + JSON.parse(e.data).code);
+      // chrome.tabs.executeScript({
+      //   code:  JSON.parse(e.data).code,
+      // });
+      //
+      //
+      // console.log("hahahahah");
+      // console.log("hahahahah");
+      // console.log("hahahahah");
+      //
+      //
     });
   };
 

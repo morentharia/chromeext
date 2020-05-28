@@ -14,14 +14,21 @@
     "default_popup": "popup.html"
   },
 
-  "permissions": ["tabs"],
+  "permissions": [
+      "tabs",
+      "activeTab",
+      "notifications",
+      "http://*/",
+      "https://*/"
+  ],
   "background": {
     "scripts": ["background.js", "hot-reload.js"],
-    "persistent": true
+    "persistent": false
   },
 
   "content_scripts": [
     {
+      "run_at": "document_end",
       "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
