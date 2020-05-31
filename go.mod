@@ -7,9 +7,12 @@ require (
 	github.com/alecthomas/chroma v0.7.3
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
+	github.com/google/uuid v1.1.1 // indirect
+	github.com/gorilla/mux v1.7.4
 	github.com/gorilla/websocket v1.4.2
 	github.com/hokaccha/go-prettyjson v0.0.0-20190818114111-108c894c2c0e // indirect
 	github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 // indirect
+	github.com/lithammer/shortuuid v3.0.0+incompatible
 	github.com/sirupsen/logrus v1.6.0
 	github.com/yudai/pp v2.0.1+incompatible
 	golang.org/x/sync v0.0.0-20200317015054-43a5402ce75a

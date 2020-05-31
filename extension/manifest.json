@@ -23,7 +23,7 @@
   ],
   "background": {
     "scripts": ["background.js", "hot-reload.js"],
-    "persistent": false
+    "persistent": true
   },
 
   "content_scripts": [
