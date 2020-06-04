@@ -12,3 +12,8 @@ http POST http://127.0.0.1:1337/eval < example2.js \
     | html-beautify -s 2 -i \
     | chroma -s lovelace -l html
 ```
+
+https://public-firing-range.appspot.com/
+
+Injecting a Content Script
+https://developer.chrome.com/extensions/devtools#injecting

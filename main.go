@@ -93,10 +93,15 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func wsSend(ctx context.Context, data map[string]interface{}) (map[string]interface{}, error) {
+    ctx, cancel := context.WithTimeout(ctx, 15 * time.Second)
+    defer cancel()
+
 	out := make(chan map[string]interface{})
-	msgChan <- Message{
-		data: data,
-		out:  out,
+	select {
+	case <-ctx.Done():
+		return nil, ctx.Err()
+	case msgChan <- Message{ data: data, out:  out, }:
+        break
 	}
 	select {
 	case <-ctx.Done():
@@ -288,11 +293,13 @@ func fsnotifyWatcher(ctx context.Context, g *errgroup.Group, ws *websocket.Conn)
 					if err != nil {
 						return err
 					}
-					_, err = wsSend(ctx, map[string]interface{}{
-						"message_type":     "eval",
-						"code":             string(content),
-						"highlighted_code": highlight(string(content), "javascript", "terminal", "solarized-dark"),
-					})
+                    go func(content []byte) {
+                        _, err = wsSend(ctx, map[string]interface{}{
+                            "message_type":     "eval",
+                            "code":             string(content),
+                            "highlighted_code": highlight(string(content), "javascript", "terminal", "solarized-dark"),
+                        })
+                    }(content)
 				}
 			case err, ok := <-watcher.Errors:
 				if !ok {

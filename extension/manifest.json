@@ -1,5 +1,6 @@
 {
   "manifest_version": 2,
+  "minimum_chrome_version": "10.0",
   "name": "virt",
   "description": "virt",
   "version": "1.0",
@@ -18,14 +19,16 @@
       "tabs",
       "activeTab",
       "notifications",
-      "http://*/",
-      "https://*/"
+      "http://*/*",
+      "https://*/*",
+      "storage",
+      "experimental"
   ],
   "background": {
     "scripts": ["background.js", "hot-reload.js"],
-    "persistent": true
+    "persistent": false
   },
-
+  "devtools_page": "devtools.html",
   "content_scripts": [
     {
       "run_at": "document_end",

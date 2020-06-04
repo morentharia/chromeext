@@ -6,28 +6,37 @@ function DOMEval(code, doc) {
 }
 
 chrome.runtime.onMessage.addListener(function (request, _, _) {
-  if (request.message_type === "dom_eval") {
-    console.log(request.highlighted_code);
-    let result = DOMEval(request.code);
-    chrome.runtime.sendMessage({
-      _id: request._id,
-      message_type: "dom_eval_done",
-      result: result || null,
-    });
-  } else if (request.message_type === "eval") {
-    console.log(request.highlighted_code);
-    let result = new Function(request.code)();
-    chrome.runtime.sendMessage({
-      _id: request._id,
-      message_type: "eval_done",
-      result: result || null,
-    });
-  } else if (request.message_type === "ping") {
-    chrome.runtime.sendMessage({
-      _id: request._id,
-      message_type: "pong",
-    });
-  } else {
-    console.warn("unknown message" + request.message);
+  try {
+    //TODO switch (request.message_type)
+    if (request.message_type === "dom_eval") {
+      console.log(request.highlighted_code);
+      let result = DOMEval(request.code);
+      chrome.runtime.sendMessage({
+        _id: request._id,
+        message_type: "dom_eval_done",
+        result: result || null,
+      });
+    } else if (request.message_type === "eval") {
+      console.log(request.highlighted_code);
+      let result = new Function(request.code)();
+      chrome.runtime.sendMessage({
+        _id: request._id,
+        message_type: "eval_done",
+        result: result || null,
+      });
+    } else if (request.message_type === "ping") {
+      chrome.runtime.sendMessage({
+        _id: request._id,
+        message_type: "pong",
+      });
+    } else {
+      console.warn("unknown message" + request.message);
+    }
+  } catch (e) {
+    console.error(e);
   }
 });
+
+function HAHA(){
+    console.log("WINWINWINWIWNIWNIWNWINWIN")
+}
